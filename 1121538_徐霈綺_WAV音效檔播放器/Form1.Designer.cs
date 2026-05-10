@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnSelectFile = new System.Windows.Forms.Button();
             this.lblFileName = new System.Windows.Forms.Label();
             this.btnPlay = new System.Windows.Forms.Button();
@@ -35,6 +36,9 @@
             this.btnStop = new System.Windows.Forms.Button();
             this.btnVolumeUp = new System.Windows.Forms.Button();
             this.btnVolumeDown = new System.Windows.Forms.Button();
+            this.trbProgress = new System.Windows.Forms.TrackBar();
+            this.tmrProgress = new System.Windows.Forms.Timer(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.trbProgress)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSelectFile
@@ -112,7 +116,7 @@
             // 
             this.btnVolumeDown.Font = new System.Drawing.Font("Microsoft JhengHei", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.btnVolumeDown.Location = new System.Drawing.Point(373, 169);
-            this.btnVolumeDown.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnVolumeDown.Margin = new System.Windows.Forms.Padding(4);
             this.btnVolumeDown.Name = "btnVolumeDown";
             this.btnVolumeDown.Size = new System.Drawing.Size(147, 50);
             this.btnVolumeDown.TabIndex = 6;
@@ -120,11 +124,29 @@
             this.btnVolumeDown.UseVisualStyleBackColor = true;
             this.btnVolumeDown.Click += new System.EventHandler(this.btnVolumeDown_Click);
             // 
+            // trbProgress
+            // 
+            this.trbProgress.Location = new System.Drawing.Point(40, 230);
+            this.trbProgress.Margin = new System.Windows.Forms.Padding(4);
+            this.trbProgress.Name = "trbProgress";
+            this.trbProgress.Size = new System.Drawing.Size(480, 56);
+            this.trbProgress.TabIndex = 7;
+            this.trbProgress.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trbProgress.Scroll += new System.EventHandler(this.trbProgress_Scroll);
+            this.trbProgress.MouseDown += new System.Windows.Forms.MouseEventHandler(this.trbProgress_MouseDown);
+            this.trbProgress.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trbProgress_MouseUp);
+            // 
+            // tmrProgress
+            // 
+            this.tmrProgress.Interval = 100;
+            this.tmrProgress.Tick += new System.EventHandler(this.tmrProgress_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(573, 262);
+            this.ClientSize = new System.Drawing.Size(573, 300);
+            this.Controls.Add(this.trbProgress);
             this.Controls.Add(this.btnVolumeDown);
             this.Controls.Add(this.btnVolumeUp);
             this.Controls.Add(this.btnStop);
@@ -133,12 +155,14 @@
             this.Controls.Add(this.lblFileName);
             this.Controls.Add(this.btnSelectFile);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "WAV 音效檔播放器";
+            ((System.ComponentModel.ISupportInitialize)(this.trbProgress)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -151,6 +175,8 @@
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Button btnVolumeUp;
         private System.Windows.Forms.Button btnVolumeDown;
+        private System.Windows.Forms.TrackBar trbProgress;
+        private System.Windows.Forms.Timer tmrProgress;
     }
 }
 

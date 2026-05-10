@@ -22,6 +22,7 @@ namespace _1121538_徐霈綺_WAV音效檔播放器
         private string wavFilePath = "";
         private bool isPaused = false;
         private int currentVolume = 1000;
+        private bool isDraggingProgress = false;
 
         public Form1()
         {
@@ -61,7 +62,15 @@ namespace _1121538_徐霈綺_WAV音效檔播放器
                         mciSendString(command, null, 0, IntPtr.Zero);
                         SetVolume();
                         mciSendString("play myWav", null, 0, IntPtr.Zero);
+
+                        StringBuilder sb = new StringBuilder(128);
+                        mciSendString("status myWav length", sb, sb.Capacity, IntPtr.Zero);
+                        if (int.TryParse(sb.ToString(), out int length))
+                        {
+                            trbProgress.Maximum = length;
+                        }
                     }
+                    tmrProgress.Start();
                 }
                 catch (Exception ex)
                 {
@@ -78,13 +87,16 @@ namespace _1121538_徐霈綺_WAV音效檔播放器
         {
             mciSendString("pause myWav", null, 0, IntPtr.Zero);
             isPaused = true;
+            tmrProgress.Stop();
         }
 
         private void btnStop_Click(object sender, EventArgs e)
         {
             mciSendString("stop myWav", null, 0, IntPtr.Zero);
-            mciSendString("close myWav", null, 0, IntPtr.Zero);
+            mciSendString("seek myWav to start", null, 0, IntPtr.Zero);
             isPaused = false;
+            tmrProgress.Stop();
+            trbProgress.Value = 0;
         }
 
         private void btnVolumeUp_Click(object sender, EventArgs e)
@@ -112,6 +124,42 @@ namespace _1121538_徐霈綺_WAV音效檔播放器
             uint v = (uint)((currentVolume / 1000.0) * 0xFFFF);
             uint newVolume = (v & 0xFFFF) | (v << 16);
             waveOutSetVolume(IntPtr.Zero, newVolume);
+        }
+
+        private void tmrProgress_Tick(object sender, EventArgs e)
+        {
+            if (!isDraggingProgress)
+            {
+                StringBuilder sb = new StringBuilder(128);
+                mciSendString("status myWav position", sb, sb.Capacity, IntPtr.Zero);
+                if (int.TryParse(sb.ToString(), out int position))
+                {
+                    if (position >= 0 && position <= trbProgress.Maximum)
+                    {
+                        trbProgress.Value = position;
+                    }
+                }
+            }
+        }
+
+        private void trbProgress_MouseDown(object sender, MouseEventArgs e)
+        {
+            isDraggingProgress = true;
+        }
+
+        private void trbProgress_MouseUp(object sender, MouseEventArgs e)
+        {
+            isDraggingProgress = false;
+            mciSendString($"seek myWav to {trbProgress.Value}", null, 0, IntPtr.Zero);
+            if (!isPaused)
+            {
+                mciSendString("play myWav", null, 0, IntPtr.Zero);
+            }
+        }
+
+        private void trbProgress_Scroll(object sender, EventArgs e)
+        {
+            // Optional: seek dynamically while scrolling
         }
     }
 }
