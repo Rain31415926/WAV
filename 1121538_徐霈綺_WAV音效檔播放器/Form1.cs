@@ -16,8 +16,12 @@ namespace _1121538_徐霈綺_WAV音效檔播放器
         [DllImport("winmm.dll")]
         private static extern long mciSendString(string strCommand, StringBuilder strReturn, int iReturnLength, IntPtr hwndCallback);
 
+        [DllImport("winmm.dll")]
+        public static extern int waveOutSetVolume(IntPtr hwo, uint dwVolume);
+
         private string wavFilePath = "";
         private bool isPaused = false;
+        private int currentVolume = 1000;
 
         public Form1()
         {
@@ -55,6 +59,7 @@ namespace _1121538_徐霈綺_WAV音效檔播放器
                         mciSendString("close myWav", null, 0, IntPtr.Zero);
                         string command = $"open \"{wavFilePath}\" type waveaudio alias myWav";
                         mciSendString(command, null, 0, IntPtr.Zero);
+                        SetVolume();
                         mciSendString("play myWav", null, 0, IntPtr.Zero);
                     }
                 }
@@ -80,6 +85,33 @@ namespace _1121538_徐霈綺_WAV音效檔播放器
             mciSendString("stop myWav", null, 0, IntPtr.Zero);
             mciSendString("close myWav", null, 0, IntPtr.Zero);
             isPaused = false;
+        }
+
+        private void btnVolumeUp_Click(object sender, EventArgs e)
+        {
+            if (currentVolume < 1000)
+            {
+                currentVolume += 100;
+                if (currentVolume > 1000) currentVolume = 1000;
+                SetVolume();
+            }
+        }
+
+        private void btnVolumeDown_Click(object sender, EventArgs e)
+        {
+            if (currentVolume > 0)
+            {
+                currentVolume -= 100;
+                if (currentVolume < 0) currentVolume = 0;
+                SetVolume();
+            }
+        }
+
+        private void SetVolume()
+        {
+            uint v = (uint)((currentVolume / 1000.0) * 0xFFFF);
+            uint newVolume = (v & 0xFFFF) | (v << 16);
+            waveOutSetVolume(IntPtr.Zero, newVolume);
         }
     }
 }

@@ -33,6 +33,8 @@
             this.btnPlay = new System.Windows.Forms.Button();
             this.btnPause = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
+            this.btnVolumeUp = new System.Windows.Forms.Button();
+            this.btnVolumeDown = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnSelectFile
@@ -84,11 +86,33 @@
             this.btnStop.UseVisualStyleBackColor = true;
             this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
+            // btnVolumeUp
+            // 
+            this.btnVolumeUp.Location = new System.Drawing.Point(30, 130);
+            this.btnVolumeUp.Name = "btnVolumeUp";
+            this.btnVolumeUp.Size = new System.Drawing.Size(100, 30);
+            this.btnVolumeUp.TabIndex = 5;
+            this.btnVolumeUp.Text = "大聲 (+)";
+            this.btnVolumeUp.UseVisualStyleBackColor = true;
+            this.btnVolumeUp.Click += new System.EventHandler(this.btnVolumeUp_Click);
+            // 
+            // btnVolumeDown
+            // 
+            this.btnVolumeDown.Location = new System.Drawing.Point(150, 130);
+            this.btnVolumeDown.Name = "btnVolumeDown";
+            this.btnVolumeDown.Size = new System.Drawing.Size(100, 30);
+            this.btnVolumeDown.TabIndex = 6;
+            this.btnVolumeDown.Text = "小聲 (-)";
+            this.btnVolumeDown.UseVisualStyleBackColor = true;
+            this.btnVolumeDown.Click += new System.EventHandler(this.btnVolumeDown_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(500, 150);
+            this.ClientSize = new System.Drawing.Size(500, 200);
+            this.Controls.Add(this.btnVolumeDown);
+            this.Controls.Add(this.btnVolumeUp);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnPause);
             this.Controls.Add(this.btnPlay);
@@ -107,6 +131,8 @@
         private System.Windows.Forms.Button btnPlay;
         private System.Windows.Forms.Button btnPause;
         private System.Windows.Forms.Button btnStop;
+        private System.Windows.Forms.Button btnVolumeUp;
+        private System.Windows.Forms.Button btnVolumeDown;
     }
 }
 
