@@ -31,6 +31,7 @@
             this.btnSelectFile = new System.Windows.Forms.Button();
             this.lblFileName = new System.Windows.Forms.Label();
             this.btnPlay = new System.Windows.Forms.Button();
+            this.btnPause = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -63,9 +64,19 @@
             this.btnPlay.UseVisualStyleBackColor = true;
             this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
             // 
+            // btnPause
+            // 
+            this.btnPause.Location = new System.Drawing.Point(150, 80);
+            this.btnPause.Name = "btnPause";
+            this.btnPause.Size = new System.Drawing.Size(100, 30);
+            this.btnPause.TabIndex = 4;
+            this.btnPause.Text = "暫停";
+            this.btnPause.UseVisualStyleBackColor = true;
+            this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
+            // 
             // btnStop
             // 
-            this.btnStop.Location = new System.Drawing.Point(150, 80);
+            this.btnStop.Location = new System.Drawing.Point(270, 80);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(100, 30);
             this.btnStop.TabIndex = 3;
@@ -79,6 +90,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(500, 150);
             this.Controls.Add(this.btnStop);
+            this.Controls.Add(this.btnPause);
             this.Controls.Add(this.btnPlay);
             this.Controls.Add(this.lblFileName);
             this.Controls.Add(this.btnSelectFile);
@@ -93,6 +105,7 @@
         private System.Windows.Forms.Button btnSelectFile;
         private System.Windows.Forms.Label lblFileName;
         private System.Windows.Forms.Button btnPlay;
+        private System.Windows.Forms.Button btnPause;
         private System.Windows.Forms.Button btnStop;
     }
 }

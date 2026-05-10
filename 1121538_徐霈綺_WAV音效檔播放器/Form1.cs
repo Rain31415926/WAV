@@ -7,14 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Media;
+using System.Runtime.InteropServices;
 
 namespace _1121538_徐霈綺_WAV音效檔播放器
 {
     public partial class Form1 : Form
     {
-        private SoundPlayer player;
+        [DllImport("winmm.dll")]
+        private static extern long mciSendString(string strCommand, StringBuilder strReturn, int iReturnLength, IntPtr hwndCallback);
+
         private string wavFilePath = "";
+        private bool isPaused = false;
 
         public Form1()
         {
@@ -42,8 +45,18 @@ namespace _1121538_徐霈綺_WAV音效檔播放器
             {
                 try
                 {
-                    player = new SoundPlayer(wavFilePath);
-                    player.Play();
+                    if (isPaused)
+                    {
+                        mciSendString("resume myWav", null, 0, IntPtr.Zero);
+                        isPaused = false;
+                    }
+                    else
+                    {
+                        mciSendString("close myWav", null, 0, IntPtr.Zero);
+                        string command = $"open \"{wavFilePath}\" type waveaudio alias myWav";
+                        mciSendString(command, null, 0, IntPtr.Zero);
+                        mciSendString("play myWav", null, 0, IntPtr.Zero);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -56,12 +69,17 @@ namespace _1121538_徐霈綺_WAV音效檔播放器
             }
         }
 
+        private void btnPause_Click(object sender, EventArgs e)
+        {
+            mciSendString("pause myWav", null, 0, IntPtr.Zero);
+            isPaused = true;
+        }
+
         private void btnStop_Click(object sender, EventArgs e)
         {
-            if (player != null)
-            {
-                player.Stop();
-            }
+            mciSendString("stop myWav", null, 0, IntPtr.Zero);
+            mciSendString("close myWav", null, 0, IntPtr.Zero);
+            isPaused = false;
         }
     }
 }
