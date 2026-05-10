@@ -1,4 +1,4 @@
-# WAV 音效檔播放器 (WAV Audio Player - Pro)
+# WAV 音效檔播放器
 
 這是一個基於 **C# Windows Forms** 開發的音效播放器進階版。除了基礎播放功能外，本版本透過 `mciSendString` 指令強化了**即時進度追蹤**與**進度跳轉**功能，提供更完整的互動體驗。
 
